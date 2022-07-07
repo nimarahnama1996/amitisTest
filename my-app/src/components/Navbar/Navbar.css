@@ -1,6 +1,6 @@
 .nav-center{
     width: 100%;
-    height: 90px;
+    height: 60px;
     background: linear-gradient(270deg, #1ADD97 0.67%, #3499FF 100%);
 }
 
@@ -11,8 +11,10 @@
    
 }
 
+
+
 .nav-cascader{
-    margin-top: 34px;
+    margin-top: 24px;
     margin-left: 4px;
 }
 
@@ -20,7 +22,7 @@
 .nav-items img{
     width: 30px;
     height: 30px;
-    margin-top: 30px;
+    margin-top: 22px;
     margin-left: -100px;
 }
 
@@ -48,32 +50,43 @@
 @media screen and (min-width: 992px){
     .nav-center{
         width: 75%;
-        height: 90px;
+        height: 50px;
     }
 
     .nav-items img{
         margin-left: -370px;
+        margin-top: 10px;
     }
 
     .nav-bell{
-        margin-top: 35px;
+        margin-top: 20px;
         margin-left: -330px;
     }
 
     .nav-cascader{
         margin-left: 40px;
+        margin-top: 15px;
     }
+
     
 }
 
 @media screen and (min-width: 1200px){
+
+    .nav-center{
+        width: 80%;
+        height: 60px;
+        background: linear-gradient(270deg, #1ADD97 0.67%, #3499FF 100%);
+    }
+
     .nav-items img{
-        margin-left: -590px;
+        margin-left: -720px;
     }
 
     .nav-bell{
-        margin-top: 35px;
-        margin-left: -550px;
+        font-size: 20px;
+        margin-top: 17px;
+        margin-left: -700px;
     }
 
     .nav-cascader{

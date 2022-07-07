@@ -1,0 +1,32 @@
+
+.menu-logo img{
+ width: 19%; 
+margin-left: 1095px;
+margin-top: -79px;
+padding: 0 20px;
+}
+
+.menu-user img{
+    width: 64px;
+    height: 64px;
+    margin-left: 1200px;
+    margin-top: -10px;
+}
+
+.menu-cascader{
+    margin-left: 1140px;
+    margin-top: 20px;
+}
+
+.menu-input{
+    width: 185px;
+    margin-left: 1140px;
+    margin-top: 20px;
+}
+
+.side-menu{
+    width: 228px;
+    margin-left: 1120px;
+    margin-top: 20px;
+}
+

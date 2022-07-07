@@ -24,7 +24,7 @@ const Navbar = () => {
         <Cascader size="small" className='nav-cascader' options={options} />
         <img src={user} className='nav-user' alt='user' />
         <BellOutlined className='nav-bell' style={{color:'white'}}/>
-        <MenuOutlined style={{marginRight:'15px',marginTop:'37px',color:'white',fontSize:'18px' }} />
+        <MenuOutlined className='nav-menu' style={{marginRight:'15px',marginTop:'16px',color:'white',fontSize:'18px' }} />
         </div>
 
 
