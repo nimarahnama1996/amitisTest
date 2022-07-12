@@ -119,32 +119,38 @@ const UsersServiceTable = () => {
         {
           title: 'نام طرح',
           dataIndex: 'name',
-          width: '20%',
+          width: '8%',
           editable: true,
         },
         {
           title: 'نام سرویس',
           dataIndex: 'serviceName',
+          width: '10%',
         },
         {
           title: 'ورودی ها',
           dataIndex: 'input',
+          width: '9%',
         },
         {
           title: 'خروجی ها',
           dataIndex: 'output',
+          width: '9%',
         },
         {
           title: 'تعداد درخواست سرویس',
           dataIndex: 'number',
+          width: '18%',
         },
         {
           title: 'قیمت پایه هر درخواست برای سرویس(ریال)',
           dataIndex: 'price',
+          width: '30%',
         },
         {
             title: 'قیمت آزادهر درخواست برای سرویس(ریال)',
             dataIndex: 'priceFree',
+            width: '20%',
           },
       ];
     

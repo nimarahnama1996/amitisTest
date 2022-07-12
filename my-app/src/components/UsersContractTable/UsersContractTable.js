@@ -1,246 +1,228 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Table,Switch } from 'antd';
-import {DeleteOutlined, PlusOutlined} from '@ant-design/icons'
+import React, { useState } from 'react';
+import { Form, Input, InputNumber,Switch, Popconfirm, Table, Typography } from 'antd';
+import {EditOutlined} from '@ant-design/icons'
+ 
 
 
 
-const EditableContext = React.createContext(null);
 
 
-const EditableRow = ({ index, ...props }) => {
-  const [form] = Form.useForm();
-  return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
-  );
-};
+
 
 const EditableCell = ({
-  title,
-  editable,
-  children,
+  editing,
   dataIndex,
+  title,
+  inputType,
   record,
-  handleSave,
+  index,
+  children,
   ...restProps
 }) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
-  const form = useContext(EditableContext);
-  useEffect(() => {
-    if (editing) {
-      inputRef.current.focus();
-    }
-  }, [editing]);
-
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
-  };
-
-  const save = async () => {
-    try {
-      const values = await form.validateFields();
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log('Save failed:', errInfo);
-    }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        
-        onClick={toggleEdit}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  return <td {...restProps}>{childNode}</td>;
+  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+          rules={[
+            {
+              required: true,
+              message: `Please Input ${title}!`,
+            },
+          ]}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  );
 };
 
 
 
 const UsersContractTable = () => {
 
-    const [dataSource, setDataSource] = useState([
-        {
-          key: '0',
-          contractNum: '12765',
-          startDate: 'احمد احمدی',
-          endDate: '12211',
-          active: '12211',
-          ceo:'33876',
-          phoneNum:'ahmad@111',
-          phone:'0912111111',
-          email:'0912111111',
 
-        },
-        {
-            key: '1',
-            contractNum: '12765',
-            startDate: 'احمد احمدی',
-            endDate: '12211',
-            active: '12211',
-            ceo:'33876',
-            phoneNum:'ahmad@111',
-            phone:'0912111111',
-            email:'0912111111',
-  
-          },
-      ]);
-      const [count, setCount] = useState(2);
-    
-      const handleDelete = (key) => {
-        const newData = dataSource.filter((item) => item.key !== key);
-        setDataSource(newData);
-      };
-    
-      const defaultColumns = [
-        {
-          title: 'شماره قرارداد',
-          dataIndex: 'contractNum',
-          width: '15%',
-          editable: true,
-        },
-        {
-          title: 'تاریخ شروع',
-          dataIndex: 'startDate',
-        },
-        {
-          title: 'تاریخ پایان',
-          dataIndex: 'endDate',
-        },
-        {
-          title: 'فعال بودن/نبودن',
-          dataIndex: 'active',
-          render: (e, record) => (< Switch  defaultChecked={e} />)
-        },
-        {
-          title: 'مدیرعامل',
-          dataIndex: 'ceo',
-        },
-        {
-          title: 'شماره موبایل',
-          dataIndex: 'phoneNum',
-        },
-        {
-            title: 'تلفن',
-            dataIndex: 'phone',
-          },
-          {
-            title: 'ایمیل',
-            dataIndex: 'email',
-          },
-        {
-          title: 'عملیات',
-          dataIndex: 'operation',
-          render: (_, record) =>
-            dataSource.length >= 1 ? (
-              <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-                <a><DeleteOutlined /></a>
-              </Popconfirm>
-            ) : null,
-        },
-      ];
-    
-      const handleAdd = () => {
-        const newData = {
-          key: count,
-          contractNum: `176543 `,
-          startDate: 'احمد احمدی',
-          endDate: `165421 `,
-          active:`1754421 `,
-          ceo:`ahmad@1765 `,
-          phoneNum:`09124341617 `,
-          phone:`09124341617 `,
-          email:`09124341617 `,
-        };
-        setDataSource([...dataSource, newData]);
-        setCount(count + 1);
-      };
-    
-      const handleSave = (row) => {
-        const newData = [...dataSource];
-        const index = newData.findIndex((item) => row.key === item.key);
+  const [form] = Form.useForm();
+  const [data, setData] = useState([
+    {
+      key: '0',
+      contractNum: '12765',
+      startDate: 'احمد احمدی',
+      endDate: '12211',
+      active: '12211',
+      ceo:'33876',
+      phoneNum:'ahmad@111',
+      phone:'0912111111',
+      email:'0912111111',
+
+    },
+    {
+        key: '1',
+        contractNum: '12765',
+        startDate: 'احمد احمدی',
+        endDate: '12211',
+        active: '12211',
+        ceo:'33876',
+        phoneNum:'ahmad@111',
+        phone:'0912111111',
+        email:'0912111111',
+
+      },
+  ]);
+  const [editingKey, setEditingKey] = useState('');
+
+  const isEditing = (record) => record.key === editingKey;
+
+  const edit = (record) => {
+    form.setFieldsValue({
+      name: '',
+      contractNum: '',
+      address: '',
+      ...record,
+    });
+    setEditingKey(record.key);
+  };
+
+  const cancel = () => {
+    setEditingKey('');
+  };
+
+  const save = async (key) => {
+    try {
+      const row = await form.validateFields();
+      const newData = [...data];
+      const index = newData.findIndex((item) => key === item.key);
+
+      if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        setDataSource(newData);
-      };
-    
-      const components = {
-        body: {
-          row: EditableRow,
-          cell: EditableCell,
-        },
-      };
-      const columns = defaultColumns.map((col) => {
-        if (!col.editable) {
-          return col;
-        }
-    
-        return {
-          ...col,
-          onCell: (record) => ({
-            record,
-            editable: col.editable,
-            dataIndex: col.dataIndex,
-            title: col.title,
-            handleSave,
-          }),
-        };
-      });
+        setData(newData);
+        setEditingKey('');
+      } else {
+        newData.push(row);
+        setData(newData);
+        setEditingKey('');
+      }
+    } catch (errInfo) {
+      console.log('Validate Failed:', errInfo);
+    }
+  };
 
+  const columns = [
+    
+    {
+      title: 'شماره قرارداد',
+      dataIndex: 'contractNum',
+      width: '15%',
+      editable: true,
+    },
+    {
+      title: 'تاریخ شروع',
+      dataIndex: 'startDate',
+    },
+    {
+      title: 'تاریخ پایان',
+      dataIndex: 'endDate',
+    },
+    {
+      title: 'فعال بودن/نبودن',
+      dataIndex: 'active',
+      render: (e, record) => (< Switch  defaultChecked={e} />)
+    },
+    {
+      title: 'مدیرعامل',
+      dataIndex: 'ceo',
+    },
+    {
+      title: 'شماره موبایل',
+      dataIndex: 'phoneNum',
+    },
+    {
+        title: 'تلفن',
+        dataIndex: 'phone',
+      },
+      {
+        title: 'ایمیل',
+        dataIndex: 'email',
+      },
+      
+
+    {
+      title: 'عملیات',
+      dataIndex: 'operation',
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link
+              onClick={() => save(record.key)}
+              style={{
+                marginRight: 8,
+              }}
+            >
+              Save
+            </Typography.Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <a>Cancel</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+           <EditOutlined />
+          </Typography.Link>
+        );
+      },
+    },
+  ];
+  const mergedColumns = columns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        inputType: col.dataIndex === 'age' ? 'number' : 'text',
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record),
+      }),
+    };
+  });
 
   return (
     <div>
-        <div>
-        <Button
-        onClick={handleAdd}
-        type="primary"
-        style={{
-          marginBottom: 16,
-          marginLeft:'900px',
-          backgroundColor:'white',
-          color:'black'
+      <div>
+      <Form form={form} component={false}>
+      <Table
+        components={{
+          body: {
+            cell: EditableCell,
+          },
         }}
-      >
-      <PlusOutlined />  قرارداد جدید 
-      </Button>
+        bordered
+        dataSource={data}
+        columns={mergedColumns}
+        rowClassName="editable-row"
+        pagination={{
+          onChange: cancel,
+        }}
+      />
+    </Form>
+
+    
+      </div>
 
       
-      <Table
-        components={components}
-        rowClassName={() => 'editable-row'}
-        bordered
-        dataSource={dataSource}
-        columns={columns}
-      />
-    </div>
+
     </div>
   )
 }

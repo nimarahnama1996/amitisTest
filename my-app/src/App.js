@@ -21,6 +21,8 @@ function App() {
       <Navbar/>
     </div>
 
+    
+
     <div>
       <SideMenu/>
     </div>
